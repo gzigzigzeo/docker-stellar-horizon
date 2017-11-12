@@ -25,24 +25,22 @@ RUN curl -f -L -o horizon.tar.gz $STELLAR_TAR_URL \
   && rm -rf horizon.tar.gz /horizon-v${HORIZON_VERSION}-linux-amd64
 
 # Settings
-ENV DOCKER_STELLAR_HORIZON_DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/horizon"
-ENV DOCKER_STELLAR_HORIZON_STELLAR_CORE_DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/core"
-ENV DOCKER_STELLAR_HORIZON_STELLAR_CORE_URL="http://core:11626"
+ENV DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/horizon"
+ENV STELLAR_CORE_DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/core"
+ENV STELLAR_CORE_URL="http://core:11626"
 ENV LOG_LEVEL="info"
 ENV INGEST="true"
 ENV PER_HOUR_RATE_LIMIT="72000"
 
-ENTRYPOINT "/bin/sh"
-
 # Healthcheck & Entrypoint
-#COPY docker_entrypoint.sh /
-#RUN chmod +x /docker_entrypoint.sh
+COPY docker_entrypoint.sh /
+RUN chmod +x /docker_entrypoint.sh
 
-#COPY docker_healthcheck.sh /
-#RUN chmod +x /docker_healtcheck.sh
+COPY docker_healthcheck.sh /
+RUN chmod +x /docker_healthcheck.sh
 
-#ENTRYPOINT ["/docker_entrypoint.sh"]
-#CMD ["stellar-core", "--conf", "/etc/stellar-core.cfg"]
+ENTRYPOINT ["/docker_entrypoint.sh"]
+CMD ["horizon"]
 #EXPOSE 8000
 
-#HEALTHCHECK CMD ["/docker_healthcheck.sh"]
+HEALTHCHECK CMD ["/docker_healthcheck.sh"]
