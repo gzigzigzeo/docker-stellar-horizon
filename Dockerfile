@@ -28,6 +28,7 @@ RUN curl -f -L -o horizon.tar.gz $STELLAR_TAR_URL \
 ENV DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/horizon"
 ENV STELLAR_CORE_DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/core"
 ENV STELLAR_CORE_URL="http://core:11626"
+ENV HTTP_PORT=8000
 ENV LOG_LEVEL="info"
 ENV INGEST="true"
 ENV PER_HOUR_RATE_LIMIT="72000"
@@ -41,6 +42,6 @@ RUN chmod +x /docker_healthcheck.sh
 
 ENTRYPOINT ["/docker_entrypoint.sh"]
 CMD ["horizon"]
-#EXPOSE 8000
+EXPOSE ${HTTP_PORT}
 
 HEALTHCHECK CMD ["/docker_healthcheck.sh"]
