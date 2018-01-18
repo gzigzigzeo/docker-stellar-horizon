@@ -2,7 +2,7 @@ FROM debian:jessie-slim
 
 MAINTAINER Viktor Sokolov <gzigzigzeo@evilmartians.com>
 
-ARG HORIZON_VERSION=0.11.0
+ARG HORIZON_VERSION=0.11.1
 ENV STELLAR_TAR_URL "https://github.com/stellar/horizon/releases/download/v${HORIZON_VERSION}/horizon-v${HORIZON_VERSION}-linux-amd64.tar.gz"
 
 RUN mkdir -p /usr/share/man/ \
@@ -25,13 +25,13 @@ RUN curl -f -L -o horizon.tar.gz $STELLAR_TAR_URL \
   && rm -rf horizon.tar.gz /horizon-v${HORIZON_VERSION}-linux-amd64
 
 # Settings
-ENV DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/horizon"
-ENV STELLAR_CORE_DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/core"
-ENV STELLAR_CORE_URL="http://core:11626"
-ENV HTTP_PORT=8000
+ENV DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/horizon?sslmode=disable"
+ENV STELLAR_CORE_DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/core?sslmode=disable"
+ENV STELLAR_CORE_URL="http://docker.for.mac.localhost:11626"
+ENV PORT=7000
 ENV LOG_LEVEL="info"
 ENV INGEST="true"
-ENV PER_HOUR_RATE_LIMIT="72000"
+ENV PER_HOUR_RATE_LIMIT="256000"
 
 # Healthcheck & Entrypoint
 COPY docker_entrypoint.sh /
@@ -42,6 +42,6 @@ RUN chmod +x /docker_healthcheck.sh
 
 ENTRYPOINT ["/docker_entrypoint.sh"]
 CMD ["horizon"]
-EXPOSE ${HTTP_PORT}
+EXPOSE ${PORT}
 
 HEALTHCHECK CMD ["/docker_healthcheck.sh"]
