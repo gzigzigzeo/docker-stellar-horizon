@@ -28,7 +28,7 @@ RUN curl -f -L -o horizon.tar.gz $STELLAR_TAR_URL \
 ENV DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/horizon?sslmode=disable"
 ENV STELLAR_CORE_DATABASE_URL "postgres://gzigzigzeo@docker.for.mac.localhost/core?sslmode=disable"
 ENV STELLAR_CORE_URL="http://docker.for.mac.localhost:11626"
-ENV PORT=7000
+ENV PORT=8000
 ENV LOG_LEVEL="info"
 ENV INGEST="true"
 ENV PER_HOUR_RATE_LIMIT="256000"
