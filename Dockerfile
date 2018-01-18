@@ -32,6 +32,7 @@ ENV PORT=7000
 ENV LOG_LEVEL="info"
 ENV INGEST="true"
 ENV PER_HOUR_RATE_LIMIT="256000"
+HISTORY_RETENTION_COUNT=256
 
 # Healthcheck & Entrypoint
 COPY docker_entrypoint.sh /
