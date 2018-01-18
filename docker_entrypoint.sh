@@ -6,6 +6,4 @@ if psql "$DATABASE_URL" -c "\dt" | grep "No relations" > /dev/null; then
 	horizon db init
 fi
 
-horizon db reap
-
 exec "$@"
